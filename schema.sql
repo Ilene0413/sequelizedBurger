@@ -1,4 +1,4 @@
 -- Drops the sequelizeBurger database if it exists currently --
-DROP DATABASE IF EXISTS sequelizedBurger;
+--DROP DATABASE IF EXISTS sequelizedBurger;
 -- Creates the "sequelizeBurger" database --
-CREATE DATABASE sequelizedBurger;
+--CREATE DATABASE sequelizedBurger;--

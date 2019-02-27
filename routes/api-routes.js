@@ -12,13 +12,14 @@ module.exports = function (app) {
   app.get("/", function (req, res) {
     // findAll returns all entries for a table when used with no options
     db.Burger.findAll({}).then(function (dbBurger) {
-      console.log(`findall ${dbBurger}`);
+      console.log(`findall ${dbBurger.id}, ${dbBurger.burger_name}`);
 
       let hbsObject = {
-        burgers: req.body.dbBurger
+        burgers: dbBurger
       };
       console.log(`findall ${hbsObject.burgers}`);
       res.render("index", hbsObject);
+
     });
   });
 
@@ -50,17 +51,20 @@ module.exports = function (app) {
   //if devoured button is clicked, the burger is being devoured
   //get id of devoured burger and set devoured to true and update burger in database
 
-  app.put("/api/burgers/:id", function (req, res) {
+  app.put("/api/burgers/", function (req, res) {
     // Update takes in an object describing the properties we want to update, and
     // we use where to describe which objects we want to update
+    console.log(`in updating burger ${req.body.id}, ${req.body.burger_name}`);
+    console.log(`req data ${req}`);
     db.Burger.update({
-      burger_name: req.body.burger_name,
-      devoured: req.body.devoured
+  //    burger_name: req.body.burger_name,
+      devoured: true
     }, {
         where: {
           id: req.body.id
         }
       }).then(function (dbBurger) {
+        console.log(`in callback function ${dbBurger.id}`)
         res.json(dbBurger);
       })
       .catch(function (err) {

@@ -2,14 +2,16 @@
 console.log(`in burger.js`);
 $(function () {
   $(".devour").on("click", function (event) {
-    let id = $(this).data("id");
-    let devoured = true;
+    let devour = $(this).data();
+    console.log (`devour , ${devour}`);
+  //  console.log(`devoured - ${this.data.id}`);
+ //   let devoured = true;
     // Send the PUT request.
-    $.ajax("/api/burgers/" + id, {
+    $.ajax("/api/burgers/", {
       type: "PUT",
-      data: devoured
+      data: devour
     }).then(
-      function () {
+      function (result) {
         // Reload the page to get the updated list
         location.reload();
       }
@@ -30,10 +32,10 @@ $(function () {
       type: "POST",
       data: newBurger
     }).then(
-      function () {
+      function (result) {
         // Reload the page to get the updated list
-        console.log(`added burger - reload page`);
-        location.reload(true);
+        console.log(`added burger - reload page ${result}`);
+        location.reload();
       }
     );
   });
