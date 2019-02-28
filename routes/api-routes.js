@@ -10,14 +10,15 @@ console.log(`in api-routes`);
 module.exports = function (app) {
 
   app.get("/", function (req, res) {
-    // findAll returns all entries for a table when used with no options
-    db.Burger.findAll({}).then(function (dbBurger) {
-      console.log(`findall ${dbBurger.id}, ${dbBurger.burger_name}`);
-
+    // findAll returns all entries for a table when used with no options and sort them alphabetically by burger name
+    db.Burger.findAll({
+      order: [
+        ['burger_name', 'ASC']
+      ]
+              }).then(function (dbBurger) {
       let hbsObject = {
         burgers: dbBurger
       };
-      console.log(`findall ${hbsObject.burgers}`);
       res.render("index", hbsObject);
 
     });
@@ -25,18 +26,18 @@ module.exports = function (app) {
 
   //if submit button is clicked then want to add a new burger to the database
   //new burgers have not been devoured, so set devoured to false
-  //display new burgers  // POST route for saving a new todo
+  //display new burgers  
+  // POST route for saving a new burger
+
   app.post("/api/burgers", function (req, res) {
-    // create takes an argument of an object describing the item we want to
+    // create takes an argument (burger name) of an object describing the item we want to
     // insert into our table. In this case we just we pass in an object with a text
-    // and complete property (req.body)
-    console.log(`in app post before creating burger ${req.body.burger_name}`);
+    // and devoured property (req.body)
     db.Burger.create({
       burger_name: req.body.burger_name,
       devoured: false
     }).then(function (result) {
       // We have access to the new burger as an argument inside of the callback function
-      console.log(`posted burger ${result.id}, ${result.burger_name}`);
       res.json(result);
     })
       .catch(function (err) {
@@ -54,8 +55,6 @@ module.exports = function (app) {
   app.put("/api/burgers/", function (req, res) {
     // Update takes in an object describing the properties we want to update, and
     // we use where to describe which objects we want to update
-    console.log(`in updating burger ${req.body.id}, ${req.body.burger_name}`);
-    console.log(`req data ${req}`);
     db.Burger.update({
   //    burger_name: req.body.burger_name,
       devoured: true
@@ -64,7 +63,6 @@ module.exports = function (app) {
           id: req.body.id
         }
       }).then(function (dbBurger) {
-        console.log(`in callback function ${dbBurger.id}`)
         res.json(dbBurger);
       })
       .catch(function (err) {

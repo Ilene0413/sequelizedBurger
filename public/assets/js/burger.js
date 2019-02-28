@@ -1,11 +1,7 @@
 //following code is for when the devoured button is selected
-console.log(`in burger.js`);
 $(function () {
   $(".devour").on("click", function (event) {
     let devour = $(this).data();
-    console.log (`devour , ${devour}`);
-  //  console.log(`devoured - ${this.data.id}`);
- //   let devoured = true;
     // Send the PUT request.
     $.ajax("/api/burgers/", {
       type: "PUT",
@@ -34,7 +30,6 @@ $(function () {
     }).then(
       function (result) {
         // Reload the page to get the updated list
-        console.log(`added burger - reload page ${result}`);
         location.reload();
       }
     );
