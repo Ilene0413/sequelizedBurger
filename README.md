@@ -2,6 +2,8 @@
 
 **Eat-Da-Burger!** is a restaurant app that lets users input the names of burgers they'd like to eat. The app uses **sequelize**.
 
+**https://blooming-cove-14841.herokuapp.com/
+
 Whenever a user submits a burger's name, the app will display the burger on the left side of the page -- waiting to be devoured, sorted by
 burger name in ascending order.
 
